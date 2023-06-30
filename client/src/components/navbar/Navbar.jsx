@@ -1,7 +1,8 @@
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import "./Navbar.scss"
 import { useEffect } from "react";
+import newRequest from "../../utils/newRequest";
 
 const Navbar = () => {
   const [active, setActive] = useState(false);
@@ -20,12 +21,19 @@ const Navbar = () => {
     }
   }, [])
 
-  const currentUser = {
-    id: 1,
-    username: "Shaheen",
-    isSeller: true,
-  }
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await newRequest.post("/auth/logout")
+      localStorage.setItem("currentUser", null)
+      navigate("/")
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <div className={active || pathname !== "/" ? "navbar active" : "navbar"}>
       <div className="container">
@@ -46,8 +54,8 @@ const Navbar = () => {
           {!currentUser && <button>Join</button>}
           {currentUser && (
             <div className="user" onClick={() => setOpen(!open)}>
-              <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="" />
-              <span>{currentUser.username}</span>
+              <img src={currentUser.img || `https://cdn-icons-png.flaticon.com/512/3135/3135715.png`} alt="" />
+              <span>{currentUser?.username}</span>
               {open && (
                 <div className="options">
                   {currentUser?.isSeller && (
@@ -66,7 +74,7 @@ const Navbar = () => {
                   <Link className="link" to="/messages">
                     Messages
                   </Link>
-                  <Link className="link" to="/">
+                  <Link className="link" onClick={handleLogout}>
                     Logout
                   </Link>
                 </div>

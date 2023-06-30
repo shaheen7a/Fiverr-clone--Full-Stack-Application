@@ -9,7 +9,7 @@ import conversationRoute from "./routers/conversation.route.js"
 import messageRoute from "./routers/message.route.js"
 import reviewRoute from "./routers/review.route.js"
 import cookieParser from "cookie-parser";
-
+import cors from "cors"
 const app = express();
 
 mongoose.set("strictQuery", true);
@@ -24,6 +24,7 @@ const connect = async () => {
   }
 }
 
+app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -34,6 +35,13 @@ app.use("/api/orders", orderRoute);
 app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messageRoute);
 app.use("/api/reviews", reviewRoute);
+
+app.use((err, req, res) => {
+  const errorStatus = err.status || 500;
+  const errorMessage = err.message || "Something went wrong";
+
+  return res.status(errorStatus).set(errorMessage);
+})
 
 app.listen(8800, () => {
   connect();

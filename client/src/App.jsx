@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import Footer from "./components/footer/Footer";
 import "./app.scss"
-import { Home, Gigs, MyGigs, Orders, Messages, Message, Add, Gig } from "./pages/index"
+import { Home, Gigs, MyGigs, Orders, Messages, Message, Add, Gig, Register, Login } from "./pages/index"
 
 function App() {
   const Layout = () => {
@@ -54,6 +54,14 @@ function App() {
         {
           path: "/gig/:id",
           element: <Gig />,
+        },
+        {
+          path: "/register",
+          element: <Register />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
         },
       ]
     },
