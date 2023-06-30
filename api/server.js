@@ -8,6 +8,7 @@ import orderRoute from "./routers/order.route.js"
 import conversationRoute from "./routers/conversation.route.js"
 import messageRoute from "./routers/message.route.js"
 import reviewRoute from "./routers/review.route.js"
+import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -24,6 +25,7 @@ const connect = async () => {
 }
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
