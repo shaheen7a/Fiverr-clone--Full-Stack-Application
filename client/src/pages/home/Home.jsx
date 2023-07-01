@@ -54,7 +54,7 @@ const Home = () => {
             </p>
           </div>
           <div className="item">
-            <video src="./img/video.mp4" controls />
+            <img src="https://cdn.dribbble.com/users/1224589/screenshots/13989301/fiverr-bd-cover-new-dri.jpg" />
           </div>
         </div>
       </div>

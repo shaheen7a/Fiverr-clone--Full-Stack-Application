@@ -8,3 +8,4 @@ Express
 Mongo
 JWT
 Bycrpt
+Cloudinary

@@ -37,28 +37,24 @@ const Navbar = () => {
   return (
     <div className={active || pathname !== "/" ? "navbar active" : "navbar"}>
       <div className="container">
-
         <div className="logo">
-          <Link to="/" className="link">
+          <Link className="link" to="/">
             <span className="text">fiverr</span>
           </Link>
           <span className="dot">.</span>
         </div>
-
         <div className="links">
           <span>Fiverr Business</span>
           <span>Explore</span>
           <span>English</span>
-          <span>Sign in</span>
           {!currentUser?.isSeller && <span>Become a Seller</span>}
-          {!currentUser && <button>Join</button>}
-          {currentUser && (
+          {currentUser ? (
             <div className="user" onClick={() => setOpen(!open)}>
-              <img src={currentUser.img || `https://cdn-icons-png.flaticon.com/512/3135/3135715.png`} alt="" />
+              <img src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Image.png" alt="" />
               <span>{currentUser?.username}</span>
               {open && (
                 <div className="options">
-                  {currentUser?.isSeller && (
+                  {currentUser.isSeller && (
                     <>
                       <Link className="link" to="/mygigs">
                         Gigs
@@ -80,13 +76,19 @@ const Navbar = () => {
                 </div>
               )}
             </div>
+          ) : (
+            <>
+              <Link to="/login" className="link">Sign in</Link>
+              <Link className="link" to="/register">
+                <button>Join</button>
+              </Link>
+            </>
           )}
         </div>
       </div>
-
-      <hr />
-      {active || pathname !== "/" && (
+      {(active || pathname !== "/") && (
         <>
+          <hr />
           <div className="menu">
             <Link className="link menuLink" to="/">
               Graphics & Design
